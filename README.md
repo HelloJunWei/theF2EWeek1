@@ -3,8 +3,8 @@
 ## 使用 Vue-cli 建置
 
 ## 安裝 
-npm install 
+-npm install 
 
 ## 執行
-npm run dev
+-npm run dev
 
