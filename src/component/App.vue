@@ -1,8 +1,8 @@
 <template>
   <div class="app">
     <h1>{{ msg }}</h1>
-    <div class="todo-list">
-      <router-view></router-view>
+    <div class="todo-list" :style="{overflow: over_flow}">
+      <router-view v-on:lisitenOverFlow="lisitenOverFlow"></router-view>
     </div>
     <app-footer></app-footer>
   </div>
@@ -17,7 +17,13 @@ export default {
   },
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Todo list',
+      over_flow: 'scroll'
+    }
+  },
+  methods:{
+    lisitenOverFlow: function(data){
+      this.over_flow = data;
     }
   }
 }
@@ -27,14 +33,14 @@ export default {
   .app{
     border: 1px solid;
     width: 500px;
-    height: 500px;
+    height: 650px;
     overflow: hidden;
     position: relative;
   }
   .todo-list{
+    z-index: 1;
     height: 100%;
-    max-height: 410px;
-    overflow-y: auto;
+    overflow: auto;
     background-color: #eee;
   }
 </style>

@@ -1,16 +1,16 @@
 <template>
 <div class="footer">
-  <ul class="nav">
-    <a class="nav-item">
-      <router-link to="/">home</router-link>
-    </a>
-    <a class="nav-item">
-      <router-link to="/done">已完成</router-link>
-    </a>
-    <a class="nav-item">
-      <router-link to="/undone">未完成</router-link>
-    </a>
-  </ul>
+    <div class="nav-item">
+        <router-link to="/">
+          <i class="fas fa-home fa-2x"></i>
+        </router-link>
+    </div>
+    <div class="nav-item">
+        <router-link to="/done"><i class="fas fa-check-circle fa-2x"></i></router-link>
+    </div>
+    <div class="nav-item">
+        <router-link to="/unDone"><i class="fas fa-list-ol fa-2x"></i></router-link>
+    </div>
 </div>
 
 </template>
@@ -34,5 +34,21 @@ export default {
     width: 100%;
     display: flex;
     justify-content: space-around;
+    height: 40px;
+    background-color: #fff;
+  }
+  .nav-item{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    padding: 10px 0;
+  }
+  .nav-item + .nav-item{
+    border-left: 1px solid
+  }
+  a{
+    color: #000;
   }
 </style>
