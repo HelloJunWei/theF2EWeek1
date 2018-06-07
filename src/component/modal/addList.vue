@@ -9,7 +9,7 @@
 
           <div class="modal-body">
               <div class="form-group">
-                <input class="form-control" type="text" v-model="todo.title">
+                <input class="form-control" type="text" v-model="todo.todo_title">
               </div>
               <div class="form-group">
                  <input class="form-control" type="date" v-model="todo.alert_time">
@@ -43,7 +43,7 @@ export default {
 	    return {
 	    	msg: 'home',
         todo:{
-          title:'aa',
+          todo_title:'aa',
           alert_time: moment().format('YYYY-MM-DD'),
           comment:'',
           done: false,
