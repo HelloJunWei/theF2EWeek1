@@ -3,7 +3,7 @@
  import UnDone from '../component/routes/UnDone.vue';
 
  export const routes =[
- 	{path: '', component: Home},
- 	{path: '/done', component: Done},
- 	{path: '/undone', component: UnDone}
+ 	{path: '', name: 'home', component: Home},
+ 	{path: '/done/:id', name: 'done', component: Done},
+ 	{path: '/undone', name: 'undone', component: UnDone}
  ] 	

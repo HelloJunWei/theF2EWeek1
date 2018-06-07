@@ -1,0 +1,71 @@
+.btn{
+  display: inline-block;
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.07em;
+  line-height: 24px;
+  position: relative;
+  border-radius: 10px;
+  transition: 0.2s;
+  cursor: pointer;
+  padding: 5px 10px;
+  z-index: 1;
+  box-shadow: 5px 5px 10px 0 rgba(0,0,0,0.2);
+  border:none;
+
+}
+.btn span{
+  color: #fff;
+  display: inline-block;
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.confirm-btn{
+  color: #ffffff;
+  background: #125298;
+  background: -moz-linear-gradient(-30deg,  #125298 0%, #185396 80%,#185396 100%);
+  background: -webkit-linear-gradient(-30deg,  #125298 0%, #185396 80%,#185396 100%);
+  background: linear-gradient(-30deg,  #125298 0%, #185396 80%,#185396 100%);
+
+}
+.confirm-btn:hover{
+  background: #B9AEF0;
+  background: -moz-linear-gradient(-25deg,  #125298 0%, #185396 80%,#185396 100%);
+  background: -webkit-linear-gradient(-25deg,  #125298 0%, #185396 80%,#185396 100%);
+  background: linear-gradient(-25deg,  #125298 0%, #185396 80%,#185396 100%);
+  box-shadow: 5px 5px rgba(0,0,0,0.2);
+  transform: scale(1.04);
+}
+.confirm-btn span{
+  color: #fff;
+}
+
+.confirm-btn:active{
+  transform: scale(0.96);
+  box-shadow: 0px 0px rgba(0,0,0,0.2);
+  background: -moz-linear-gradient(25deg,  #125298 0%, #185396 80%,#185396 100%);
+  background: -webkit-linear-gradient(25deg,  #125298 0%, #185396 80%,#185396 100%);
+  background: linear-gradient(25deg,  #125298 0%, #185396 80%,#185396 100%);
+}
+
+.cancel-btn{
+  color: rgba(0,0,0,.8);
+  background: #F8F8F8;
+}
+
+.cancel-btn span{
+  color: rgba(0,0,0,.8);
+}
+
+.cancel-btn:hover{
+  box-shadow: 5px 5px rgba(0,0,0,0.2);
+  transform: scale(1.04);
+}
+
+
+.cancel-btn:active{
+  transform: scale(0.96);
+  box-shadow: 0px 0px rgba(0,0,0,0.2);
+}
