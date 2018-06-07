@@ -1,27 +1,31 @@
 <template>
   <div>
-    <div class="card" :class="{'is-zoomed': todo.is_zoomed}" v-for="(todo, index) in todoLists" @click = "changeIsZoom(index)" :style="{transform: todo.translate_y}">
-    	<h1>{{todo.is_zoomed}}</h1>
-    	{{todo.todo_title}}<br/>
-    	{{todo.alert_time}}<br/>
-    	{{todo.comment}}<br/>
-    	{{todo.done}}<br/>
-    	{{todo.todo_title}}<br/>
-    	{{todo.alert_time}}<br/>
-    	{{todo.comment}}<br/>
-    	{{todo.done}}<br/>
-    	{{todo.todo_title}}<br/>
-    	{{todo.alert_time}}<br/>
-    	{{todo.comment}}<br/>
-    	{{todo.done}}<br/>
-
-    </div>
+      <div v-for="(todo, index) in todoLists" class="card" :class="{'is-zoomed': todo.is_zoomed}" @click = "isZoom(index)" :style="{transform: todo.translate_y}">
+        <div class="form-group">
+          <input type="text" class="form-control" v-model=todo.todo_title>
+        </div>
+        <div class="form-group">
+          <label for="">提醒時間</label>
+          <input class="form-control" type="date" v-model="todo.alert_time">
+        </div>
+      	{{todo.comment}}<br/>
+      	{{todo.done}}<br/>
+        {{todo.is_zoomed}}
+        <div class="form-group">
+          <div>
+            <button class="btn confirm-btn" @click = "notZoom(index)">
+              <span>修改</span>
+            </button>
+          </div>
+        </div>
+      </div>
   </div>
 </template>
 
 <script>
+import {eventBus} from '../../js/main';
+import '../../scss/btn.css'
 export default {
-
   data () {
     return {
       todoLists: [{
@@ -30,6 +34,7 @@ export default {
     		comment:'comment 1',
     		done: false,
     		is_zoomed: false,
+        disable: false,
     		translate_y: 'translateY(0px)',
     	},
     	{
@@ -38,6 +43,7 @@ export default {
 			comment:'comment 2',
 			done: false,
 			is_zoomed: false,
+      disable: false,
 			translate_y: 'translateY(0px)',
     	},
     	{
@@ -46,27 +52,42 @@ export default {
 			comment:'comment 3',
 			done: false,
 			is_zoomed: false,
+      disable: false,
 			translate_y: 'translateY(0px)',
     	}
     	],
     }
   },
   methods:{
-  	changeIsZoom: function(index){
-  		if(this.todoLists[index].is_zoomed == false){
+  	isZoom(index) {
+      if(this.todoLists[index].disable){
+        return
+      }
+      if(!this.todoLists[index].is_zoomed){
   			var y_move = 70+(110*index);
   			this.$emit('lisitenOverFlow', 'visible');
   			this.todoLists[index].translate_y = `translateY(-${y_move}px)`;
-  		}
-  		else{
-  			var y_move =0;
-  			this.todoLists[index].translate_y = `translateY(${y_move}px)`;
-  			setTimeout(index=>{
-  				this.$emit('lisitenOverFlow', 'scroll')
-  			},500)
-  		}
-  		this.todoLists[index].is_zoomed = !this.todoLists[index].is_zoomed;
-  	}
+  		  this.todoLists[index].is_zoomed = true
+        this.todoLists[index].disable = true
+      }
+  	},
+    notZoom(index) {
+      if(this.todoLists[index].is_zoomed){
+        var y_move =0;
+        this.todoLists[index].translate_y = `translateY(${y_move}px)`;
+        var _this = this.todoLists[index]
+        setTimeout(index=>{
+          this.$emit('lisitenOverFlow', 'scroll')
+          _this.disable =false
+        },500)
+        this.todoLists[index].is_zoomed = false
+      }
+    }
+  },
+  created(){
+    eventBus.$on('post', (data)=>{
+      this.todoLists.push(data)
+    })
   }
 }
 </script>
@@ -74,7 +95,6 @@ export default {
 <style lang="scss" scoped>
 	.card{
 		z-index: 2;
-		border: 1px solid red;
 		margin: 10px;
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 		border-radius: 5px;
@@ -100,5 +120,23 @@ export default {
 	    width: 479px;
 	    margin-top: 5px;
 	  }
+    .form-group{
+      padding: 20px
+    }
 	}
+
+.modal-enter {
+  opacity: 0;
+}
+
+.modal-leave-active {
+  opacity: 0;
+}
+
+.modal-enter .modal-container,
+.modal-leave-active .modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
 </style>

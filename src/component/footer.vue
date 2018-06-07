@@ -30,7 +30,6 @@ export default {
     position: absolute;
     z-index: 2;
     bottom: 0;
-    border: 1px solid;
     width: 100%;
     display: flex;
     justify-content: space-around;
@@ -45,10 +44,7 @@ export default {
     flex-flow: column;
     padding: 10px 0;
   }
-  .nav-item + .nav-item{
-    border-left: 1px solid
-  }
   a{
-    color: #000;
+    color: #474747;
   }
 </style>
