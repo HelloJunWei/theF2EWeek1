@@ -9,8 +9,6 @@
           <input class="form-control" type="date" v-model="todo.alert_time">
         </div>
       	{{todo.comment}}<br/>
-      	{{todo.done}}<br/>
-        {{todo.is_zoomed}}
         <div class="form-group">
           <div>
             <button class="btn confirm-btn" @click = "notZoom(index)">
