@@ -24,7 +24,7 @@
 
 <script>
 import {eventBus} from '../../js/main';
-import '../../scss/btn.css'
+import '../../css/btn.css'
 export default {
   data () {
     return {

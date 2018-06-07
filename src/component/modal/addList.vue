@@ -34,6 +34,7 @@
 <script>
 import datePicker from 'vuejs-datepicker';
 import {eventBus} from '../../js/main';
+import '../../css/btn.css'
 export default {
     components: {
       datePicker
