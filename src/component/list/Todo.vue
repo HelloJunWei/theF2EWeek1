@@ -1,10 +1,21 @@
 <template>
   <div>
-      <div v-for="(todo, index) in filter" class="card" :class="{'is-zoomed': todo.is_zoomed}" @click = "isZoom(todo,index)" :style="{transform: todo.translate_y }">
+      <div v-for="(todo, index) in filter" class="card" :class="{'is-zoomed': todo.is_zoomed}" @click="isZoom(todo,index)" :style="{transform: todo.translate_y}">
         <div class="tag-bg" :class="computedTag(todo)">
         </div>
         <div class="form-group">
-          <h3>{{todo.todo_title}}</h3>
+          <h3 :class="{'is-done': todo.done ==1}" >{{todo.todo_title}}</h3>
+        </div>
+        <div class="form-group">
+          完成:
+          <label class="radio">
+            <input type="radio" class="all" v-model="todo.done" value="1">
+            <span>是</span>
+          </label>
+          <label class="radio">
+            <input type="radio" class="all" v-model="todo.done" value="0">
+            <span>否</span>
+          </label>
         </div>
         <div class="form-group">
           <label for="">標題</label>
@@ -19,7 +30,7 @@
               <option value="purple">紫色</option>
             </select>
           </div>
-        </div>  
+        </div> 
         <div class="form-group">
           <label for="">提醒時間</label>
           <input class="form-control" type="date" v-model="todo.alert_time">
@@ -43,9 +54,9 @@
 </template>
 
 <script>
+import 'bootstrap/dist/css/bootstrap.min.css';
 import {eventBus} from '../../js/main';
 import '../../css/btn.scss'
-
 const filterFn = {
   changeTag(list, tag){
     var result =[]
@@ -66,20 +77,21 @@ const filterFn = {
 
   done(todo, tag){
     var result = todo.filter(item=>{
-      return item.done
+      return item.done == 1
     })
     return this.changeTag(result, tag)
   },
 
   unDone(todo, tag){
     var result = todo.filter(item=>{
-      return !item.done
+      return item.done == 0
     })
     return this.changeTag(result, tag)
   },
 }
 
 export default {
+
   props:['active'],
   data () {
     return {
@@ -87,7 +99,7 @@ export default {
     		todo_title: 'todo 1',
     		alert_time: moment().format('YYYY-MM-DD'),
     		comment:'comment 1',
-    		done: true,
+    		done: 0,
     		is_zoomed: false,
         disable: false,
         todo_tag:'blue',
@@ -97,7 +109,7 @@ export default {
 			todo_title: 'todo 2',
 			alert_time: moment().format('YYYY-MM-DD'),
 			comment:'comment 2',
-			done: false,
+			done: 0,
 			is_zoomed: false,
       disable: false,
       todo_tag:'red',
@@ -107,7 +119,7 @@ export default {
 			todo_title: 'todo 3',
 			alert_time: moment().format('YYYY-MM-DD'),
 			comment:'comment 3',
-			done: false,
+			done: 1,
 			is_zoomed: false,
       disable: false,
       todo_tag:'purple',
@@ -117,17 +129,17 @@ export default {
       todo_title: 'todo 4',
       alert_time: moment().format('YYYY-MM-DD'),
       comment:'comment 4',
-      done: false,
+      done: 0,
       is_zoomed: false,
       disable: false,
       todo_tag:'blue',
-      // translate_y: 'translateY(0px)',
+      translate_y: 'translateY(0px)',
       },
       {
       todo_title: 'todo 5',
       alert_time: moment().format('YYYY-MM-DD'),
       comment:'comment 5',
-      done: false,
+      done: 0,
       is_zoomed: false,
       disable: false,
       todo_tag:'red',
@@ -156,7 +168,6 @@ export default {
       }
 
       if(!this.todoLists[index].is_zoomed){
-        console.log(now_index)
   			var y_move = 70+(170*now_index);
   			this.$emit('lisitenOverFlow', 'visible');
   			this.todoLists[index].translate_y = `translateY(-${y_move}px)`;
@@ -174,6 +185,7 @@ export default {
         var y_move =0;
         this.todoLists[index].translate_y = `translateY(${y_move}px)`;
         var _this = this.todoLists[index]
+        this.$el.childNodes[index].scrollTop = 0
         setTimeout(index=>{
           this.$emit('lisitenOverFlow', 'scroll')
           _this.disable =false
@@ -197,9 +209,9 @@ export default {
 	.card{
 		z-index: 2;
 		margin: 20px 10px;
-		box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+		box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.5);
 		border-radius: 5px;
-		transition: .7s;
+		transition: all 0.5s ease;
 		background: #fff;
   		cursor: pointer;
 		height: 150px;
@@ -208,15 +220,10 @@ export default {
 		&:hover{
 			box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
 		}
-		&:active{
-			transform: translateY(5px);
-			box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.8);
-		}
 		&.is-zoomed {
 		  position: absolute;
-		  transition: .7s;
-      // top: 0;
-	    height: 600px !important;
+		  transition: all 0.5s ease;
+	    height: 620px !important;
 	    overflow: scroll;
 	    z-index: 1000;
 	    width: 479px;
@@ -226,10 +233,11 @@ export default {
       margin: 0
     }
     .form-group{
-      padding: 5px
+      padding: 5px;
+      margin-bottom: 5px;
     }
     .tag-bg{
-      height: 100px;
+      min-height: 95px;
     }
     .tag-red{
       background-image: linear-gradient(to top, #ffb199 0%, #ff0844 100%);
@@ -243,6 +251,12 @@ export default {
     .edit-btn{
       display: flex;
       justify-content: flex-end;
+    }
+    .radio{
+      display: inline-block;
+    }
+    .is-done{
+      text-decoration: line-through;
     }
 	}
 

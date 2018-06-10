@@ -4,7 +4,7 @@
       <div class="modal-wrapper">
         <div class="modal-container">
           <div class="modal-header">
-              新增事件
+              新增
           </div>
 
           <div class="modal-body">
@@ -48,13 +48,9 @@
 </template>
 
 <script>
-import datePicker from 'vuejs-datepicker';
 import {eventBus} from '../../js/main';
 import '../../css/btn.scss'
 export default {
-    components: {
-      datePicker
-    },
   	data () {
 	    return {
 	    	msg: 'home',
