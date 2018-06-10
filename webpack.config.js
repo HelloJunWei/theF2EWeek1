@@ -1,13 +1,23 @@
 var path = require('path')
 var webpack = require('webpack')
-
 module.exports = {
-  entry: './src/js/main.js',
+  entry: {
+    build: './src/js/main.js',
+    vendor: ['moment']
+  },
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
-    filename: 'build.js'
+    filename: '[name].js',
   },
+  plugins: [
+    new webpack.ProvidePlugin({   
+      moment: 'moment'
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: ['vendor', 'manifest'] // Specify the common bundle's name.
+    }),
+  ],
   module: {
     rules: [
       {

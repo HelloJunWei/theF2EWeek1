@@ -16,6 +16,7 @@
 </template>
 
 <script>
+  import 'bootstrap/dist/css/bootstrap.min.css';
 export default {
   data () {
     return {
@@ -45,6 +46,6 @@ export default {
     padding: 10px 0;
   }
   a{
-    color: #474747;
+    color: rgba(0,0,0,0.4);
   }
 </style>

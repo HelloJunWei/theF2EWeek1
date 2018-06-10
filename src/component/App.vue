@@ -32,6 +32,7 @@
 </template>
 
 <script>
+  import 'bootstrap/dist/css/bootstrap.min.css';
   import '../css/btn.scss'
   import {eventBus} from '../js/main';
   import footer from './footer.vue';
