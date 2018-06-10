@@ -169,7 +169,6 @@ export default {
         var y_move =0;
         this.todoLists[index].translate_y = `translateY(${y_move}px)`;
         var _this = this.todoLists[index];
-        this.$refs.card[index].scrollTop = 0
         setTimeout(()=>{
           _this.disable =false
         },100)
