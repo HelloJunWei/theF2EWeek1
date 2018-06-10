@@ -1,6 +1,6 @@
 <template>
   <div>
-      <div v-for="(todo, index) in filter" class="card" :class="{'is-zoomed': todo.is_zoomed}" @click = "isZoom(todo,index)">
+      <div v-for="(todo, index) in filter" class="card" :class="{'is-zoomed': todo.is_zoomed}" @click = "isZoom(todo,index)" :style="{transform: todo.translate_y }">
         <div class="tag-bg" :class="computedTag(todo)">
         </div>
         <div class="form-group">
@@ -91,7 +91,7 @@ export default {
     		is_zoomed: false,
         disable: false,
         todo_tag:'blue',
-    		// translate_y: 'translateY(0px)',
+    		translate_y: 'translateY(0px)',
     	},
     	{
 			todo_title: 'todo 2',
@@ -101,7 +101,7 @@ export default {
 			is_zoomed: false,
       disable: false,
       todo_tag:'red',
-			// translate_y: 'translateY(0px)',
+			translate_y: 'translateY(0px)',
     	},
     	{
 			todo_title: 'todo 3',
@@ -111,7 +111,7 @@ export default {
 			is_zoomed: false,
       disable: false,
       todo_tag:'purple',
-			// translate_y: 'translateY(0px)',
+			translate_y: 'translateY(0px)',
     	},
       {
       todo_title: 'todo 4',
@@ -131,7 +131,7 @@ export default {
       is_zoomed: false,
       disable: false,
       todo_tag:'red',
-      // translate_y: 'translateY(0px)',
+      translate_y: 'translateY(0px)',
       },],
       tag:'all'
     }
@@ -156,9 +156,10 @@ export default {
       }
 
       if(!this.todoLists[index].is_zoomed){
-  			var y_move = 70+(110*now_index);
+        console.log(now_index)
+  			var y_move = 70+(170*now_index);
   			this.$emit('lisitenOverFlow', 'visible');
-  			// this.todoLists[index].translate_y = `translateY(-${y_move}px)`;
+  			this.todoLists[index].translate_y = `translateY(-${y_move}px)`;
   		  this.todoLists[index].is_zoomed = true
         this.todoLists[index].disable = true
       }
@@ -171,7 +172,7 @@ export default {
       })
       if(this.todoLists[index].is_zoomed){
         var y_move =0;
-        // this.todoLists[index].translate_y = `translateY(${y_move}px)`;
+        this.todoLists[index].translate_y = `translateY(${y_move}px)`;
         var _this = this.todoLists[index]
         setTimeout(index=>{
           this.$emit('lisitenOverFlow', 'scroll')
@@ -214,7 +215,7 @@ export default {
 		&.is-zoomed {
 		  position: absolute;
 		  transition: .7s;
-      top: 0;
+      // top: 0;
 	    height: 600px !important;
 	    overflow: scroll;
 	    z-index: 1000;
