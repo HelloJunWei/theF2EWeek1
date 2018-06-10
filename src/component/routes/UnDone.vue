@@ -1,19 +1,19 @@
 <template>
-  <div class="un-done">
-    <h1>{{ msg }}</h1><h1>{{ msg }}</h1><h1>{{ msg }}</h1><h1>{{ msg }}</h1><h1>{{ msg }}</h1><h1>{{ msg }}</h1><h1>{{ msg }}</h1><h1>{{ msg }}</h1><h1>{{ msg }}</h1><h1>{{ msg }}</h1><h1>{{ msg }}</h1><h1>{{ msg }}</h1><h1>{{ msg }}</h1><h1>{{ msg }}</h1><h1>{{ msg }}</h1><h1>{{ msg }}</h1>
-  </div>
+    <todo :active="active"></todo>
 </template>
 
 <script>
+import Todo from '../list/Todo.vue'
 export default {
-
-  data () {
-    return {
-      msg: 'un done'
-    }
-  }
+	components:{
+		todo: Todo
+	},
+	data () {
+		return {
+			active: 'unDone',
+		}
+	},
+	methods: {
+	}
 }
 </script>
-
-<style scoped>
-</style>

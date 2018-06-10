@@ -1,16 +1,19 @@
 <template>
-  <div>
-    <h1>{{ msg }}</h1>
-  </div>
+    <todo :active="active"></todo>
 </template>
 
 <script>
+import Todo from '../list/Todo.vue'
 export default {
-
-  data () {
-    return {
-      msg: 'done'
-    }
-  }
+	components:{
+		todo: Todo
+	},
+	data () {
+		return {
+			active: 'done',
+		}
+	},
+	methods: {
+	}
 }
 </script>
