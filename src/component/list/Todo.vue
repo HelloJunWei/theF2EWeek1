@@ -1,6 +1,6 @@
 <template>
-  <div>
-      <div v-for="(todo, index) in filter" class="card" :class="{'is-zoomed': todo.is_zoomed}" @click="isZoom(todo,index)" :style="{transform: todo.translate_y}">
+    <draggable v-model="todoLists" :options="{group:'people'}" @start="drag=true" @end="drag=false">
+      <div v-for="(todo, index) in filter" class="card" :class="{'is-zoomed': todo.is_zoomed}" @click="isZoom(todo,index)" :style="{transform: todo.translate_y}" ref="card">
         <div class="tag-bg" :class="computedTag(todo)">
         </div>
         <div class="form-group">
@@ -37,7 +37,7 @@
         </div>
         <div class="form-group">
           <label for="">備註</label>
-          <textarea class="form-control" rows="3" v-model="todo.comment"></textarea>
+          <textarea class="form-control" rows="2" v-model="todo.comment"></textarea>
         </div>  
         <div class="form-group">
           <div class="edit-btn">
@@ -50,13 +50,14 @@
           </div>
         </div>
       </div>
-  </div>
+    </draggable>  
 </template>
 
 <script>
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {eventBus} from '../../js/main';
-import '../../css/btn.scss'
+import '../../css/btn.scss';
+import draggable from 'vuedraggable'
 const filterFn = {
   changeTag(list, tag){
     var result =[]
@@ -91,8 +92,10 @@ const filterFn = {
 }
 
 export default {
-
   props:['active'],
+  components: {
+    draggable,
+  },
   data () {
     return {
       todoLists: [{
@@ -124,27 +127,7 @@ export default {
       disable: false,
       todo_tag:'purple',
 			translate_y: 'translateY(0px)',
-    	},
-      {
-      todo_title: 'todo 4',
-      alert_time: moment().format('YYYY-MM-DD'),
-      comment:'comment 4',
-      done: 0,
-      is_zoomed: false,
-      disable: false,
-      todo_tag:'blue',
-      translate_y: 'translateY(0px)',
-      },
-      {
-      todo_title: 'todo 5',
-      alert_time: moment().format('YYYY-MM-DD'),
-      comment:'comment 5',
-      done: 0,
-      is_zoomed: false,
-      disable: false,
-      todo_tag:'red',
-      translate_y: 'translateY(0px)',
-      },],
+    	},],
       tag:'all'
     }
   },
@@ -166,11 +149,12 @@ export default {
       if(this.todoLists[index].disable){
         return
       }
-
       if(!this.todoLists[index].is_zoomed){
-  			var y_move = 70+(170*now_index);
-  			this.$emit('lisitenOverFlow', 'visible');
-  			this.todoLists[index].translate_y = `translateY(-${y_move}px)`;
+        var y_move = 70+(170*now_index);
+        var _this = this.todoLists[index];
+        setTimeout(()=>{
+          _this.translate_y = `translateY(-${y_move}px)`;
+        },150)
   		  this.todoLists[index].is_zoomed = true
         this.todoLists[index].disable = true
       }
@@ -184,12 +168,11 @@ export default {
       if(this.todoLists[index].is_zoomed){
         var y_move =0;
         this.todoLists[index].translate_y = `translateY(${y_move}px)`;
-        var _this = this.todoLists[index]
-        this.$el.childNodes[index].scrollTop = 0
-        setTimeout(index=>{
-          this.$emit('lisitenOverFlow', 'scroll')
+        var _this = this.todoLists[index];
+        this.$refs.card[index].scrollTop = 0
+        setTimeout(()=>{
           _this.disable =false
-        },500)
+        },100)
         this.todoLists[index].is_zoomed = false
       }
     }
@@ -211,22 +194,20 @@ export default {
 		margin: 20px 10px;
 		box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.5);
 		border-radius: 5px;
-		transition: all 0.5s ease;
+		// transition: 2s;
 		background: #fff;
-  		cursor: pointer;
+  	cursor: pointer;
 		height: 150px;
 		overflow:  hidden;
-		position: relative;
+    position: relative;
 		&:hover{
 			box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
 		}
 		&.is-zoomed {
-		  position: absolute;
-		  transition: all 0.5s ease;
-	    height: 620px !important;
-	    overflow: scroll;
+      animation-name: popUP;
+      animation-duration: 1s;
+      animation-fill-mode: forwards;
 	    z-index: 1000;
-	    width: 479px;
 	    margin-top: 5px;
 	  }
     h3{
@@ -260,18 +241,28 @@ export default {
     }
 	}
 
-.modal-enter {
-  opacity: 0;
+@keyframes popUP {
+  0%{
+    width: 479px;
+  }
+  25%{
+    transform: scale(0.95);
+    position: fixed;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.8);
+  }
+
+  75%{
+    // position: fixed;
+    height: 620px;
+    width: 479px;
+  }
+  100% {
+    position: fixed;
+    height: 620px ;
+    width: 479px;
+  }
 }
 
-.modal-leave-active {
-  opacity: 0;
-}
 
-.modal-enter .modal-container,
-.modal-leave-active .modal-container {
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
-}
 
 </style>

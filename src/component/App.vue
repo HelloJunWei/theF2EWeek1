@@ -24,8 +24,8 @@
     </div>
     <add-list v-if="showModal" @close="showModal = false">
     </add-list>
-    <div class="todo-list" :style="{overflow: over_flow}">
-      <router-view @lisitenOverFlow="lisitenOverFlow"></router-view>
+    <div class="todo-list">
+      <router-view></router-view>
     </div>
     <app-footer></app-footer>
   </div>
@@ -52,7 +52,7 @@ export default {
   },
   methods:{
     lisitenOverFlow(data) {
-      this.over_flow = data;
+      // this.over_flow = data;
     },
     changeTag(){
       eventBus.$emit('changeTag', this.tag)
@@ -67,7 +67,6 @@ export default {
     width: 500px;
     height: 650px;
     box-shadow: 1px 1px 15px rgba(0,0,0,.5);
-    overflow: hidden;
     position: relative;
     background-color: rgba(238, 238, 238,.4);
     .header{
@@ -81,7 +80,7 @@ export default {
   .todo-list{
     z-index: 1;
     height: 82%;
-    overflow: auto;
+    overflow-y: scroll;
     &::-webkit-scrollbar {
       display: none;
     }
@@ -100,11 +99,11 @@ export default {
     border-radius: 50%;
     color: #fff;
     background-color: #f91d58;
-    box-shadow: 5px 5px 5px rgba(0,0,0,.4);
+    box-shadow: 5px 10px 5px rgba(0,0,0,.4);
     transition: .2s;
     &:active{
       transform: translateY(5px);
-      box-shadow: 5px 0px 15px rgba(0, 0, 0, 0.8);
+      box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.8);
     }
   }
 </style>

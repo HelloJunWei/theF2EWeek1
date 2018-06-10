@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <todo @lisitenOverFlow="lisitenOverFlow" :active="active"></todo>
-  </div>
+    <todo :active="active"></todo>
 </template>
 
 <script>
@@ -16,9 +14,6 @@ export default {
 		}
 	},
 	methods: {
-		lisitenOverFlow: function(data) {
-			this.$emit('lisitenOverFlow', data)
-		}
 	}
 }
 </script>
