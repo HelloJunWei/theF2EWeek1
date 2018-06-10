@@ -1,19 +1,24 @@
 <template>
-  <div class="un-done">
-    <h1>{{ msg }}</h1><h1>{{ msg }}</h1><h1>{{ msg }}</h1><h1>{{ msg }}</h1><h1>{{ msg }}</h1><h1>{{ msg }}</h1><h1>{{ msg }}</h1><h1>{{ msg }}</h1><h1>{{ msg }}</h1><h1>{{ msg }}</h1><h1>{{ msg }}</h1><h1>{{ msg }}</h1><h1>{{ msg }}</h1><h1>{{ msg }}</h1><h1>{{ msg }}</h1><h1>{{ msg }}</h1>
+  <div>
+    <todo @lisitenOverFlow="lisitenOverFlow" :active="active"></todo>
   </div>
 </template>
 
 <script>
+import Todo from '../list/Todo.vue'
 export default {
-
-  data () {
-    return {
-      msg: 'un done'
-    }
-  }
+	components:{
+    	todo: Todo
+  	},
+  	data () {
+	    return {
+	    	active: 'unDone'
+	    }
+	},
+	methods: {
+		lisitenOverFlow: function(data) {
+			this.$emit('lisitenOverFlow', data)
+		}
+	}
 }
 </script>
-
-<style scoped>
-</style>

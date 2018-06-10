@@ -1,16 +1,24 @@
 <template>
   <div>
-    <h1>{{ msg }}</h1>
+    <todo @lisitenOverFlow="lisitenOverFlow" :active="active"></todo>
   </div>
 </template>
 
 <script>
+import Todo from '../list/Todo.vue'
 export default {
-
-  data () {
-    return {
-      msg: 'done'
-    }
-  },
+	components:{
+		todo: Todo
+	},
+	data () {
+		return {
+			active: 'done',
+		}
+	},
+	methods: {
+		lisitenOverFlow: function(data) {
+			this.$emit('lisitenOverFlow', data)
+		}
+	}
 }
 </script>
