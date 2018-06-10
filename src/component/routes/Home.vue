@@ -1,6 +1,6 @@
 <template>
   <div>
-    <todo v-on:lisitenOverFlow="lisitenOverFlow"></todo>
+    <todo @lisitenOverFlow="lisitenOverFlow" :active="active"></todo>
   </div>
 </template>
 
@@ -12,7 +12,7 @@ export default {
   	},
   	data () {
 	    return {
-	    	msg: 'home'
+	    	active: 'all'
 	    }
 	},
 	methods: {

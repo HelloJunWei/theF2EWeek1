@@ -9,12 +9,25 @@
 
           <div class="modal-body">
               <div class="form-group">
+                <label>標題</label>
                 <input class="form-control" type="text" v-model="todo.todo_title">
               </div>
               <div class="form-group">
+                <label>提醒時間</label>
                  <input class="form-control" type="date" v-model="todo.alert_time">
               </div>
               <div class="form-group">
+                <label>標記</label>
+                 <div>
+                  <select class="form-control" v-model="todo.todo_tag">
+                    <option value="blue">藍色</option>
+                    <option value="red">紅色</option>
+                    <option value="purple">紫色</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>備註</label>
                 <textarea class="form-control" rows="3" v-model="todo.comment"></textarea>
               </div>
           </div>
@@ -22,6 +35,9 @@
           <div class="modal-footer">
               <button class="btn confirm-btn" @click="addList()">
                 <span>新增</span>
+              </button>
+              <button class="btn cancel-btn" @click="$emit('close', false)">
+                <span>取消</span>
               </button>
             </slot>
           </div>
@@ -34,7 +50,7 @@
 <script>
 import datePicker from 'vuejs-datepicker';
 import {eventBus} from '../../js/main';
-import '../../css/btn.css'
+import '../../css/btn.scss'
 export default {
     components: {
       datePicker
@@ -46,6 +62,7 @@ export default {
           todo_title:'aa',
           alert_time: moment().format('YYYY-MM-DD'),
           comment:'',
+          todo_tag:'blue',
           done: false,
           is_zoomed: false,
           translate_y: 'translateY(0px)',
@@ -102,16 +119,6 @@ export default {
   margin:5px 0;
 }
 
-
-
-/*
- * The following styles are auto-applied to elements with
- * transition="modal" when their visibility is toggled
- * by Vue.js.
- *
- * You can easily play with the modal transition by editing
- * these styles.
- */
 
 .modal-enter {
   opacity: 0;

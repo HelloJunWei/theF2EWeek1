@@ -4,6 +4,6 @@
 
  export const routes =[
  	{path: '', name: 'home', component: Home},
- 	{path: '/done/:id', name: 'done', component: Done},
+ 	{path: '/done', name: 'done', component: Done},
  	{path: '/undone', name: 'undone', component: UnDone}
  ] 	
