@@ -1,14 +1,17 @@
-var path = require('path')
-var webpack = require('webpack')
+const path = require('path')
+const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+
 module.exports = {
   entry: {
     build: './src/js/main.js',
     vendor: ['moment']
   },
   output: {
-    path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
-    filename: '[name].js',
+    path: path.resolve(__dirname, './dist/static'),
+    publicPath: './static',
+    filename: '[name].[hash].js',
   },
   plugins: [
     new webpack.ProvidePlugin({   
@@ -16,6 +19,19 @@ module.exports = {
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: ['vendor', 'manifest'] // Specify the common bundle's name.
+    }),
+    new HtmlWebpackPlugin({
+      //編譯後的位置與名稱
+      filename: '../index.html',
+      //來源
+      template: './index.html',
+      inject: true,
+      minify: {
+        removeComments: (process.env.NODE_ENV === 'production')?true:false,
+        collapseWhitespace: (process.env.NODE_ENV === 'production')?true:false,
+        removeAttributeQuotes: (process.env.NODE_ENV === 'production')?true:false
+      },
+      chunksSortMode: 'dependency'
     }),
   ],
   module: {
