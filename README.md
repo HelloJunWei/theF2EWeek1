@@ -1,10 +1,16 @@
 # The F2E week 1
+Week 1 To-do list  https://github.com/hexschool/TheF2E/blob/master/stage/No1.todolist.md
 
-## 使用 Vue-cli 建置
+[DEMO](https://hellojunwei.github.io/theF2EWeek1/#/)
 
-## 安裝 
--npm install 
+## Build Setup
+```
+# install dependencies
+npm install
 
-## 執行
--npm run dev
+# serve with hot reload at localhost:8080
+npm run dev
 
+# build for production with minification
+npm run build
+```
