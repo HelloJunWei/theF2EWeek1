@@ -1,7 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 module.exports = {
   entry: {
@@ -9,11 +9,14 @@ module.exports = {
     vendor: ['moment']
   },
   output: {
-    path: path.resolve(__dirname, './dist/static'),
-    publicPath: './static',
+    // path: path.resolve(__dirname, './dist/static/'),
+    path: path.resolve(__dirname, './dist'),
+    // publicPath: './static',
+    publicPath: '/',
     filename: '[name].[hash].js',
   },
   plugins: [
+    new CleanWebpackPlugin(['dist']),
     new webpack.ProvidePlugin({   
       moment: 'moment'
     }),
@@ -22,16 +25,10 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       //編譯後的位置與名稱
-      filename: '../index.html',
+      filename: 'index.html',
       //來源
-      template: './index.html',
+      template: 'src/index.html',
       inject: true,
-      minify: {
-        removeComments: (process.env.NODE_ENV === 'production')?true:false,
-        collapseWhitespace: (process.env.NODE_ENV === 'production')?true:false,
-        removeAttributeQuotes: (process.env.NODE_ENV === 'production')?true:false
-      },
-      chunksSortMode: 'dependency'
     }),
   ],
   module: {
@@ -83,9 +80,15 @@ module.exports = {
     extensions: ['*', '.js', '.vue', '.json']
   },
   devServer: {
+    compress: true,
     historyApiFallback: true,
     noInfo: true,
-    overlay: true
+    overlay: true,
+    publicPath: '/',
+    host: '0.0.0.0',
+    watchOptions: {
+      poll: 3000,
+    }
   },
   performance: {
     hints: false
